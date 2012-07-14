@@ -87,6 +87,41 @@ if [ -f $LIBSTDERRRED  ]; then
         export LD_PRELOAD=$LIBSTDERRRED
 fi
 
+
+export RMBIN=$HOME/.recyclebin/
+function rmtobin() {
+	if [ -e $RMBIN/$1 ]; then
+		#name already exists
+		echo "$RMBIN/$1 already exists : move to bak"
+		mv $RMBIN/$1 $RMBIN/$1.bak
+	fi
+	mv $1 $RMBIN
+}
+
+function rm() {
+	echo removing $1 to recyclebin
+	if [ -d $RMBIN ]; then 
+		echo "$RMBIN exists"
+	else
+		echo "mkdir $RMBIN"
+		mkdir $RMBIN || exit
+	fi
+
+	while [ $1 ]; do
+		if [ -e "$1" ] ; then
+			echo "moving $1 to $RMBIN"
+			rmtobin $1
+		else
+			echo "moving $1 ignored : option?"
+		fi
+
+		shift
+	done
+
+	echo "done rm"
+}
+
 ## machine specific
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 
