@@ -56,10 +56,10 @@ set foldmethod=syntax
 highlight Folded     gui=none guifg=#804030 guibg=#fff0d0 ctermbg=darkgrey  ctermfg=blue  cterm=bold
 " DISABLED :  highlight foldcolumn
 "highlight FoldColumn gui=none guifg=#6b6b6b guibg=#e7e7e7 ctermfg=black ctermbg=white
-" DISABLED : visible TAB/EOL
-"set list
-" DISABLED : char of visible TAB/EOL
-"set listchars=tab:^_,trail:~
+" visible TAB/EOL
+set list
+" char of visible TAB/EOL
+set listchars=tab:^_,trail:~
 " specify color scheme
 colorscheme minecolor
 " set background

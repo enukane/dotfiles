@@ -15,4 +15,9 @@ echo move current .vim to .vim.bak
 echo make symlink to vimrc
 ln -s ~/dotfiles/vim ~/.vim
 
+echo move current .screenrc to .screenrc.bak
+[ -f ~/.screenrc ] && mv ~/.screenrc ~/.screenrc.bak
+echo make symlink to screenrc
+ln -s ~/dotfiles/screenrc ~/.screenrc
+
 source ~/.zshrc
