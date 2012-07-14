@@ -14,3 +14,5 @@ echo move current .vim to .vim.bak
 [ -d ~/.vim ] && mv ~/.vim ~/.vim.bak
 echo make symlink to vimrc
 ln -s ~/dotfiles/vim ~/.vim
+
+source ~/.zshrc
