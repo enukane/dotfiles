@@ -20,4 +20,8 @@ echo move current .screenrc to .screenrc.bak
 echo make symlink to screenrc
 ln -s ~/dotfiles/screenrc ~/.screenrc
 
+echo move current .tmux.conf to .tmux.conf
+[ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf.bak
+ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+
 source ~/.zshrc
