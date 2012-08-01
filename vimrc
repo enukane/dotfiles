@@ -21,7 +21,7 @@ set fileencodings=utf-8,euc-jp,iso2022-jp,shift-jis,utf-16,ucs-2-internal,ucs-2
 " Vim general 
 "---------------------------------
 " set where to place swap files
-set directory=~/.vim/swp
+set directory=~/.swp
 " dir to search runtime file 
 set runtimepath+=$HOME/.vim,/$HOME/.vim/colors,$HOME/.vim/syntax,$HOME/.vim/,$HOME/.vim/ftpplugin
 " when macvim

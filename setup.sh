@@ -15,6 +15,9 @@ echo move current .vim to .vim.bak
 echo make symlink to vimrc
 ln -s ~/dotfiles/vim ~/.vim
 
+echo make swap dir for vim
+mkdir ~/.swp
+
 echo move current .screenrc to .screenrc.bak
 [ -f ~/.screenrc ] && mv ~/.screenrc ~/.screenrc.bak
 echo make symlink to screenrc
