@@ -261,3 +261,10 @@ let g:SrcExpl_searchLocalDef = 1
 " ctags
 let g:SrcExpl_updateTagsCmd = "exctags --sort=foldcase -R . "
 
+
+"--------------------------------
+" pathogen
+"--------------------------------
+call pathogen#infect()
+syntax on
+filetype plugin indent on
