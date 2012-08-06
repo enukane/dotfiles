@@ -27,4 +27,6 @@ echo move current .tmux.conf to .tmux.conf
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf.bak
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 
-source ~/.zshrc
+echo "##########################################################"
+echo "# setup is done. type "source ~/.zshrc" to enable config #"
+echo "##########################################################"
