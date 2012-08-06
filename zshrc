@@ -116,6 +116,28 @@ function rm() {
 	done
 }
 
+function forcerm() {
+	echo "force removing $1"
+	echo "is this ok ? (y/N) :"
+	read ans
+	case $ans in
+		[yY])
+			echo "remove entry"
+			;;
+		[nN])
+			echo "abandon removing. bye"
+			return 1
+			;;
+		*)
+			echo "wrong answer. abort"
+			return 2
+			;;
+	esac
+	
+	/bin/rm -rf $1
+	echo "$1 is permanently gone...."
+}
+
 ## machine specific
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
