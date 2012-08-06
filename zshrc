@@ -89,35 +89,31 @@ fi
 
 export RMBIN=$HOME/.recyclebin/
 function rmtobin() {
-	if [ -e $RMBIN/$1 ]; then
+	TMPSTR=`date "+%Y%m%d%H%M.%S"`
+	DST=$RMBIN/$1.$TMPSTR
+	if [ -e $DST ]; then
 		#name already exists
-		echo "$RMBIN/$1 already exists : move to bak"
-		mv $RMBIN/$1 $RMBIN/$1.bak
+		#echo "$DST already exists : try later"
+		#return 1
 	fi
-	mv $1 $RMBIN
+	echo "clear to $DST"
+	mv $1 $DST
 }
 
 function rm() {
-	echo removing $1 to recyclebin
 	if [ -d $RMBIN ]; then 
-		echo "$RMBIN exists"
+		;
 	else
-		echo "mkdir $RMBIN"
-		mkdir $RMBIN || exit
+		echo "$RMBIN not exists : create directory"
+		mkdir $RMBIN || return
 	fi
-
+	
 	while [ $1 ]; do
 		if [ -e "$1" ] ; then
-			echo "moving $1 to $RMBIN"
 			rmtobin $1
-		else
-			echo "moving $1 ignored : option?"
 		fi
-
 		shift
 	done
-
-	echo "done rm"
 }
 
 ## machine specific
