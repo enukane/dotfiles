@@ -49,8 +49,8 @@ local BLUE=$'%{\e[1;34m%}'
 local RED=$'%{\e[1;31m%}'
 local CLEARBLUE=$'%{\e[1;36m%}'
 local DEFAULT=$'%{\e[1;0m%}'
+
 PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ "
-PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
 RPROMPT="(%W %T)"
 
 HISTFILE=~/.zshhistory
