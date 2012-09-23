@@ -49,7 +49,7 @@ local BLUE=$'%{\e[1;34m%}'
 local RED=$'%{\e[1;31m%}'
 local CLEARBLUE=$'%{\e[1;36m%}'
 local DEFAULT=$'%{\e[1;0m%}'
-
+PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ "
 PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
 RPROMPT="(%W %T)"
 
@@ -89,8 +89,9 @@ fi
 
 export RMBIN=$HOME/.recyclebin/
 function rmtobin() {
-	TMPSTR=`date "+%Y%m%d%H%M.%S"`
-	DST=$RMBIN/$1.$TMPSTR
+	RMDATE=`date "+%Y%m%d%H%M.%S"`
+	RMDST=`echo $1 | sed -e 's/\//__/g'`
+	DST=$RMBIN/$RMDST.$RMDATE
 	if [ -e $DST ]; then
 		#name already exists
 		#echo "$DST already exists : try later"
