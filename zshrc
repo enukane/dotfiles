@@ -7,6 +7,7 @@ export	LC_MESSAGES=ja_JP.UTF-8
 case ${UID} in
 0) # when root 
     LANG=C
+    LC_ALL=C
     ;;
 esac
 
