@@ -1,25 +1,16 @@
 "---------------------------------
 " encoding
 "---------------------------------
-
 set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
-"set fileencoding=euc-jp
 set fileencodings=utf-8,euc-jp,iso2022-jp,shift-jis,utf-16,ucs-2-internal,ucs-2
-"set fileformats=unix,dos,mac
-
-
-
-"set encoding=euc-jp
-"set fenc=euc-jp
-"set fileencodings=iso-2022-jp,euc-jp,cp932,utf-8
-"set fileencodings=euc-jp,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
-
 
 "---------------------------------
-" Vim general 
+" Vim general, system
 "---------------------------------
+" Vi improved
+set nocompatible
 " set where to place swap files
 set directory=~/.swp
 " dir to search runtime file 
@@ -32,16 +23,26 @@ if has('gui_macvim')
 	set guioptions-=T
 endif
 
+if has('vim_starting')
+	set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+endif
+call neobundle#rc(expand('~/.vim/bundle/'))
 
 "---------------------------------
 "  Editor Views
 "---------------------------------
+" no splash
+set shortmess+=I
+" show title
+set title
+" enable mode line
+set modeline
+" show wildmenu
+set wildmenu
 " show line numbers
 set nu
 " print coordinates of cursor at right-bottom
 set ruler
-" DISABLED : show TAB character or EOL
-" set list
 "show vim command on status line
 set showcmd
 " show line under current cursor
@@ -66,7 +67,8 @@ colorscheme minecolor
 set background=dark
 " set cursorline color
 highlight CursorLine ctermfg=Red
-
+cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ?  getcmdtype() == '?' ? '\?' : '?'
 
 "---------------------------------
 "  Searching
@@ -79,6 +81,9 @@ set wrapscan
 set incsearch
 " ignore upper/lower-case when searching
 set ignorecase
+" hilight searched world
+set hlsearch
+" automatically modify / to \/ when searching
 
 
 "---------------------------------
@@ -88,7 +93,7 @@ set ignorecase
 syntax on
 " do smart indent(?) : no effenct when cindent is on
 set smartindent
-" default tabstop length
+" default shown tab length
 set tabstop=8
 "set shiftwidth=8
 " don't insert spaces as TAB
@@ -98,34 +103,6 @@ set backspace=2
 " don't insert space when concatenated japanese lines
 set formatoptions+=mM
 
-
-"---------------------------------
-" NeocomplCache
-"---------------------------------
-" User neocomplcache
-let g:neocomplcache_enable_at_startup = 0
-" Use smart case : ignore Upper/lower-case till uppercase entered
-let g:neocomplcache_enable_smart_case = 1
-" enable underbar completion
-let g:neocomplcache_enable_underbar_completion = 1
-" set minimum cached syntax length to 3 (4 by default)
-let g:neocomplcache_min_syntax_length = 3
-" place for snippets file
-let g:neocomplcache_snippets_dir = '~/.vim/snippets'
-" unknown. maybe ruby?
-let g:neocomplcache_omni_patterns = {
-			\ 'ruby' : '[^. *\t]\.\w*\|\h\w*::'
-			\}
-" neocomplcache lang specific dictionary
-let g:neocomplcache_dictionary_filetype_lists = {
-			\ 'default' : '',
-			\ 'ruby' : $HOME . '/.vim/dict/ruby.dict'
-			\}
-
-"---------------------------------
-" format.vim 
-"---------------------------------
-let format_allow_over_tw=1
 
 "---------------------------------
 " gtags 
@@ -177,7 +154,6 @@ let g:Tex_ViewRule_pdf='/usr/bin/open -a /Applications/Preview.app'
 "---------------------------------
 " change status line color in INPUT MODE
 "---------------------------------
-
 let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
 
 if has('syntax')
@@ -208,10 +184,6 @@ function! s:GetHighlight(hi)
 	return hl
 endfunction
 
-
-"---------------------------------
-" from sync
-"---------------------------------
 "---------------------------------
 " Show ZENKAKU space
 "---------------------------------
@@ -234,6 +206,60 @@ set textwidth=80
 if exists('&colorcolumn')
 	set colorcolumn=+1
 endif
+
+"--------------------------------
+" plugins
+"--------------------------------
+
+"--------------------------------
+" Neobundle 
+"--------------------------------
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vinarise'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'taglist.vim'
+NeoBundle 'Source-Explorer-srcexpl.vim'
+"NeoBundle 'scrooloose/syntastic'
+
+filetype plugin indent on
+
+"---------------------------------
+" NeocomplCache
+"---------------------------------
+" User neocomplcache
+let g:neocomplcache_enable_at_startup = 0
+" Use smart case : ignore Upper/lower-case till uppercase entered
+let g:neocomplcache_enable_smart_case = 1
+" use camel case compl
+let g:neocomplcache_enable_camel_case_completion = 1
+" enable underbar completion
+let g:neocomplcache_enable_underbar_completion = 1
+" enable fuzzy compl
+let g:neocomplcache_enable_fuzzy_completion = 0
+" set minimum cached syntax length to 3 (4 by default)
+let g:neocomplcache_min_syntax_length = 3
+" set auto compl len
+let g:neocomplcache_auto_completion_start_length = 2
+" set manual compl len
+let g:neocomplcache_manual_completion_start_length = 0
+
+" place for snippets file
+let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+" unknown. maybe ruby?
+let g:neocomplcache_omni_patterns = {
+			\ 'ruby' : '[^. *\t]\.\w*\|\h\w*::'
+			\}
+" neocomplcache lang specific dictionary
+let g:neocomplcache_dictionary_filetype_lists = {
+			\ 'default' : '',
+			\ 'ruby' : $HOME . '/.vim/dict/ruby.dict'
+			\}
+
+"---------------------------------
+" format.vim 
+"---------------------------------
+let format_allow_over_tw=1
 
 "--------------------------------
 " source explorer
@@ -268,3 +294,22 @@ let g:SrcExpl_updateTagsCmd = "exctags --sort=foldcase -R . "
 call pathogen#infect()
 syntax on
 filetype plugin indent on
+
+"--------------------------------
+" syntastic 
+"--------------------------------
+"let g:syntastic_mode_map = { 'mode': 'active',
+"	\ 'active_filetypes': [],
+"	\ 'passive_filetypes': ['html', 'less'] }
+"let g:syntastic_enable_signs=1
+"let g:syntastic_auto_jump=1
+"let g:syntastic_auto_loc_list=2
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"--------------------------------
+" vim-filer
+"--------------------------------
+let g:vimfiler_as_default_explorer = 1
+

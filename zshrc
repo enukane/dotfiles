@@ -11,7 +11,6 @@ case ${UID} in
     ;;
 esac
 
-export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 ### module
 #setopt share_history # share history between terminals
@@ -21,26 +20,21 @@ setopt hist_reduce_blanks # reduce blanks
 setopt auto_pushd # cd - + tab to show navigation
 setopt pushd_ignore_dups # ignore dupd pushd
 setopt listtypes # completion candidates are signed
-
 setopt correct
-#zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+setopt auto_cd
+setopt noautoremoveslash
+setopt nolistbeep # no beep
+setopt prompt_subst
 
 autoload -U compinit
 compinit
+
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'so=32' 'pi=33' 'ex=31' 'bd=46;34' 'cd=43;34' 'su=41;30' 'sg=46;30' 'tw=42;30' 'ow=43;30'
-
-
-setopt auto_cd
-
-setopt noautoremoveslash
-
-setopt nolistbeep # no beep
-
-setopt prompt_subst
 autoload -U colors
 colors
 
 ### variables
+export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 #PROMPT="[%B%n%b@\e%m] %~ %# "
 local WHITE=$'%{\e[1;37m%}'
 local CYAN=$'%{\e[1;36m%}'
@@ -67,14 +61,22 @@ SAVEHIST=50000
 export EDITOR=vim
 
 ### path
-PLAN9=$HOME/plan9 export PLAN9
-PATH=$PATH:$PLAN9/bin:/usr/local/bin export PATH
-PATH=$HOME/Gentoo/usr/bin/:$PATH
-PATH=$HOME/usr/local/bin:$PATH
-PATH=/usr/pkg/bin/:$HOME/bin/:$PATH
-PATH=/sbin/:~/usr/bin/:$PATH
+#### plan9port
+export PLAN9PATH=$HOME/plan9
+#### Gentoo
+export GENTOOPATH=$HOME/Gentoo/usr/bin
+#### PKGSRC
+export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin
+#### HOMEBINPATH
+export HOMEBINPATH=$HOME/bin:$HOME/usr/bin:$HOME/bin/utils
 
-export LESS="-R"
+#### PATH
+export PATH=/bin/:/sbin/:/usr/bin/:/usr/sbin
+PATH=/usr/local/bin/:$PATH
+PATH=$PLAN9PATH:$PATH
+PATH=$GENTOOPATH:$PATH
+PATH=$PKGSRCPATH:$PATH
+PATH=$HOMEBINPATH:$PATH
 
 ### alias
 alias ls="ls -F"
@@ -84,10 +86,7 @@ alias l="ls -CF"
 alias scrr='screen -U -D -RR'
 alias s='screen -U'
 alias up="cd ../;"
-#alias diff=colordiff
 
-# stderrred
-#
 # stderrred
 export LIBSTDERRRED="/home/nkaneko/Sources/stderred/lib/stderred.so"
 if [ -f $LIBSTDERRRED  ]; then
@@ -95,6 +94,7 @@ if [ -f $LIBSTDERRRED  ]; then
 fi
 
 
+# commands
 export RMBIN=$HOME/.recyclebin/
 function rmtobin() {
 	RMDATE=`date "+%Y%m%d%H%M.%S"`
@@ -109,6 +109,7 @@ function rmtobin() {
 	mv $1 $DST
 }
 
+## make rm backup
 function rm() {
 	if [ -d $RMBIN ]; then 
 		;
@@ -125,8 +126,9 @@ function rm() {
 	done
 }
 
+# this is true rm
 function forcerm() {
-	echo "force removing $1"
+	echo "force removing $*"
 	echo "is this ok ? (y/N) :"
 	read ans
 	case $ans in
@@ -149,5 +151,3 @@ function forcerm() {
 
 ## machine specific
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-
