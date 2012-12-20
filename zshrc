@@ -145,8 +145,8 @@ function forcerm() {
 			;;
 	esac
 	
-	/bin/rm -rf $1
-	echo "$1 is permanently gone...."
+	/bin/rm -rf $*
+	echo "$* is permanently gone...."
 }
 
 ## machine specific
