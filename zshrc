@@ -149,5 +149,27 @@ function forcerm() {
 	echo "$* is permanently gone...."
 }
 
+REGD=$HOME/.cdd
+
+function cdd() {
+if [ -e "$REGD" ] ; then
+	cd `cat $REGD`
+else
+	echo "no directory registered"
+	cd $HOME
+fi
+}
+
+function regd() {
+PWD=`pwd`
+echo $PWD > $REGD
+echo "directory registered : `cat $REGD`"
+}
+
+function unregd() {
+echo "directory unregistered : `cat $REGD`"
+}
+
+
 ## machine specific
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
