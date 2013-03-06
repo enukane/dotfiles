@@ -12,6 +12,9 @@ case ${UID} in
 esac
 
 
+[ -f ~/.zshrc.local.lang ] && source ~/.zshrc.local.lang
+
+
 ### module
 #setopt share_history # share history between terminals
 setopt append_history # append later history
