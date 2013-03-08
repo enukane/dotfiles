@@ -207,6 +207,11 @@ function unregd() {
 	echo "directory unregistered : `cat $REGD`"
 }
 
+# reload zshrc
+function reload() {
+        source $HOME/.zshrc
+}
+
 ## host specific commands
 [ -f ~/.zshrc.local.command ] && source ~/.zshrc.local.command
 
