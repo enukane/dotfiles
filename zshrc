@@ -94,7 +94,7 @@ alias l="ls -CF"
 alias scrr='screen -U -D -RR'
 alias s='screen -U'
 alias up="cd ../;"
-[ -f `which ag` ] && alias grep=ag
+`which ag` > /dev/null 2>&1  && [ -f `which ag` ] && alias grep=ag
 
 
 
