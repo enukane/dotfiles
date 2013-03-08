@@ -261,7 +261,7 @@ C)
 	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
 	;;
 *)
-	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT %#"
+	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT %# "
 	;;
 esac
 
