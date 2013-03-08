@@ -61,7 +61,7 @@ export EDITOR=vim
 
 ## subpath definitions
 # basic
-export PATH=/bin/:/sbin/:usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/
+export PATH=/bin/:/sbin/:/usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/
 # plan9 port
 export PLAN9PATH=$HOME/plan9
 # Gentoo
