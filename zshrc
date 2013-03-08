@@ -1,34 +1,32 @@
-### lang
-export	LANG=ja_JP.UTF-8
-export	LC_ALL=ja_JP.UTF-8
-export	LC_CTYPE=ja_JP.UTF-8
-export	LC_MESSAGES=ja_JP.UTF-8
-
-case ${UID} in
-0) # when root 
-    LANG=C
-    LC_ALL=C
-    ;;
-esac
-
-
-[ -f ~/.zshrc.local.lang ] && source ~/.zshrc.local.lang
-
-
+########################################
+###
 ### module
-#setopt share_history # share history between terminals
-setopt append_history # append later history
-setopt hist_no_store # exclude history command
-setopt hist_reduce_blanks # reduce blanks
-setopt auto_pushd # cd - + tab to show navigation
-setopt pushd_ignore_dups # ignore dupd pushd
-setopt listtypes # completion candidates are signed
+###
+########################################
+
+### setopt definitions
+## share history between terminals
+#setopt share_history # it's annoying... let me use per-terminal history...
+# append later history
+setopt append_history
+# exclude history command
+setopt hist_no_store
+# reduce blanks in history
+setopt hist_reduce_blanks
+# cd - + tab to show navigation
+setopt auto_pushd
+# ignore dupd pushd
+setopt pushd_ignore_dups
+# completion candidates are signed
+setopt listtypes
 setopt correct
 setopt auto_cd
 setopt noautoremoveslash
-setopt nolistbeep # no beep
+# never beeps
+setopt nolistbeep
 setopt prompt_subst
 
+### autoloads
 autoload -U compinit
 compinit
 
@@ -36,52 +34,59 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'so=32' 'pi=33' 'ex=31' 'bd=4
 autoload -U colors
 colors
 
+
+
+########################################
+###
 ### variables
+###
+########################################
+
+### terminal config related
 export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-#PROMPT="[%B%n%b@\e%m] %~ %# "
-local WHITE=$'%{\e[1;37m%}'
-local CYAN=$'%{\e[1;36m%}'
-local GREEN=$'%{\e[1;32m%}'
-local YELLOW=$'%{\e[1;33m%}'
-local BLUE=$'%{\e[1;34m%}'
-local RED=$'%{\e[1;31m%}'
-local CLEARBLUE=$'%{\e[1;36m%}'
-local DEFAULT=$'%{\e[1;0m%}'
-
-case ${LANG} in
-C)
-	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
-	;;
-*)
-	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ "
-	;;
-esac
-RPROMPT="(%W %T)"
-
 HISTFILE=~/.zshhistory
 HISTSIZE=50000
 SAVEHIST=50000
 export EDITOR=vim
 
-### path
-#### plan9port
-export PLAN9PATH=$HOME/plan9
-#### Gentoo
-export GENTOOPATH=$HOME/Gentoo/usr/bin
-#### PKGSRC
-export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin
-#### HOMEBINPATH
-export HOMEBINPATH=$HOME/bin:$HOME/usr/bin:$HOME/bin/utils
+## host specific variables
+[ -f ~/.zshrc.local.variables ] && source ~/.zshrc.local.variables
 
-#### PATH
-export PATH=/bin/:/sbin/:/usr/bin/:/usr/sbin
-PATH=/usr/local/bin/:$PATH
+
+########################################
+###
+### PATH
+###
+########################################
+
+## subpath definitions
+# basic
+export PATH=/bin/:/sbin/:usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/
+# plan9 port
+export PLAN9PATH=$HOME/plan9
+# Gentoo
+export GENTOOPATH=$HOME/Gentoo/usr/bin
+# pkgsrc
+export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin:$HOME/usr/pkg/bin:$HOME/usr/pkg/sbin
+# home bin
+export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
+
+## left path
 PATH=$PLAN9PATH:$PATH
 PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
+## right path
 
+## host specific path
+[ -f ~/.zshrc.local.path ] && source ~/.zshrc.local.path
+
+
+########################################
+###
 ### alias
+###
+########################################
 alias ls="ls -F"
 alias ll="ls -alF"
 alias la="ls -A"
@@ -89,16 +94,29 @@ alias l="ls -CF"
 alias scrr='screen -U -D -RR'
 alias s='screen -U'
 alias up="cd ../;"
-
-# stderrred
-export LIBSTDERRRED="/home/nkaneko/Sources/stderred/lib/stderred.so"
-if [ -f $LIBSTDERRRED  ]; then
-        export LD_PRELOAD=$LIBSTDERRRED
-fi
+[ -f `which ag` ] && alias grep=ag
 
 
-# commands
+
+########################################
+###
+### commands
+###
+########################################
+
+#############################
+## rm : rm with recyclebin ##
+#############################
+# description:
+#     rm with recyclebin
+#     lesson : one must not use rm directly...sigh
+# usage:
+#     rm <target>
+
+# recyclebin
 export RMBIN=$HOME/.recyclebin/
+
+# mv to recycle bin
 function rmtobin() {
 	RMDATE=`date "+%Y%m%d%H%M.%S"`
 	RMDST=`echo $1 | sed -e 's/\//__/g'`
@@ -112,7 +130,7 @@ function rmtobin() {
 	mv $1 $DST
 }
 
-## make rm backup
+# make rm backup
 function rm() {
 	if [ -d $RMBIN ]; then 
 		;
@@ -152,8 +170,22 @@ function forcerm() {
 	echo "$* is permanently gone...."
 }
 
-REGD=$HOME/.cdd
+#########
+## cdd ##
+#########
+# description:
+#     remember directory and jump there directly
+# usage:
+#     # remember current directory
+#       $ regd
+#     # jump there
+#       $ cdd
+#     # forget directory
+#       $ unregd
 
+# directory is memo'ed here
+REGD=$HOME/.cdd
+# cd to memorized directory
 function cdd() {
 if [ -e "$REGD" ] ; then
 	cd `cat $REGD`
@@ -163,16 +195,87 @@ else
 fi
 }
 
+# memorize directory
 function regd() {
-PWD=`pwd`
-echo $PWD > $REGD
-echo "directory registered : `cat $REGD`"
+	PWD=`pwd`
+	echo $PWD > $REGD
+	echo "directory registered : `cat $REGD`"
 }
 
+# forget directory
 function unregd() {
-echo "directory unregistered : `cat $REGD`"
+	echo "directory unregistered : `cat $REGD`"
 }
 
+## host specific commands
+[ -f ~/.zshrc.local.command ] && source ~/.zshrc.local.command
 
-## machine specific
+
+
+########################################
+###
+### lang
+###
+########################################
+## locales
+export	LANG=ja_JP.UTF-8
+export	LC_ALL=ja_JP.UTF-8
+export	LC_CTYPE=ja_JP.UTF-8
+export	LC_MESSAGES=ja_JP.UTF-8
+
+## special locale for root : always C
+case ${UID} in
+0) # when root 
+    LANG=C
+    LC_ALL=C
+    ;;
+esac
+
+## host local locale >> ~/.zshrc.local.lang
+[ -f ~/.zshrc.local.lang ] && source ~/.zshrc.local.lang
+
+
+
+########################################
+###
+### Prompt
+###
+########################################
+
+## color definition
+local WHITE=$'%{\e[1;37m%}'
+local CYAN=$'%{\e[1;36m%}'
+local GREEN=$'%{\e[1;32m%}'
+local YELLOW=$'%{\e[1;33m%}'
+local BLUE=$'%{\e[1;34m%}'
+local RED=$'%{\e[1;31m%}'
+local CLEARBLUE=$'%{\e[1;36m%}'
+local DEFAULT=$'%{\e[1;0m%}'
+
+## RPROMPT
+# default PROMPT
+#PROMPT="[%B%n%b@\e%m] %~ %# "
+# PROMPT definition
+case ${LANG} in
+C)
+	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
+	;;
+*)
+	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT %#"
+	;;
+esac
+
+# RPROMPT
+RPROMPT="(%W %T)"
+
+# host specific prompt
+[ -f ~/.zshrc.local.prompt ] && source ~/.zshrc.local.prompt
+
+
+
+########################################
+###
+### host specific general
+###
+########################################
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
