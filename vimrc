@@ -118,7 +118,7 @@ set formatoptions+=mM
 ":Gtags -f filename	: list funcs
 "global -c funcname-p	: list funcnames includes partial funcname-p
 ":Gtags -g word		: grep source code with word
-map <C-t> :Gtags
+map <C-a> :Gtags
 map <C-h> :Gtags -gl<CR>
 map <C-i> :Gtags -f %<CR>
 map <C-j> :GtagsCursor<CR>
@@ -312,4 +312,11 @@ filetype plugin indent on
 " vim-filer
 "--------------------------------
 let g:vimfiler_as_default_explorer = 1
+
+"---------------------------------
+" ctags 
+"---------------------------------
+" C-\ to jump to definition in vertically split
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
 
