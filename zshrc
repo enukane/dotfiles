@@ -70,11 +70,14 @@ export GENTOOPATH=$HOME/Gentoo/usr/bin
 export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin:$HOME/usr/pkg/bin:$HOME/usr/pkg/sbin
 # home bin
 export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
+# rbenv
+export RBENVPATH=$HOME/.rbenv/shims
 
 ## left path
 PATH=$PLAN9PATH:$PATH
 PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
+PATH=$RBENVPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
 ## right path
 
@@ -275,6 +278,16 @@ RPROMPT="(%W %T)"
 
 # host specific prompt
 [ -f ~/.zshrc.local.prompt ] && source ~/.zshrc.local.prompt
+
+
+
+########################################
+###
+###  other
+###
+########################################
+## rbenv
+eval "$(rbenv init -)"
 
 
 
