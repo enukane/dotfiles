@@ -287,7 +287,7 @@ RPROMPT="(%W %T)"
 ###
 ########################################
 ## rbenv
-eval "$(rbenv init -)"
+`which rbenv` > /dev/null 2>&1  && eval "$(rbenv init -)"
 
 
 
