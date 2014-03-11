@@ -6,7 +6,7 @@
 
 ### setopt definitions
 ## share history between terminals
-#setopt share_history # it's annoying... let me use per-terminal history...
+unsetopt share_history # it's annoying... let me use per-terminal history...
 # append later history
 setopt append_history
 # exclude history command
@@ -19,8 +19,11 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 # completion candidates are signed
 setopt listtypes
+# check spell
 setopt correct
+# automatically cd to directory
 setopt auto_cd
+# never remove slash terminating directory name
 setopt noautoremoveslash
 # never beeps
 setopt nolistbeep
@@ -61,7 +64,7 @@ export EDITOR=vim
 
 ## subpath definitions
 # basic
-export PATH=/bin/:/sbin/:/usr/bin/:/usr/sbin/:/usr/local/bin/:/usr/local/sbin/
+export PATH=/bin:/sbin/:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # plan9 port
 export PLAN9PATH=$HOME/plan9
 # Gentoo
@@ -71,15 +74,31 @@ export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin:$HOME/usr/pkg/bin:$HOME/usr/pkg/sbi
 # home bin
 export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
 # rbenv
-export RBENVPATH=$HOME/.rbenv/shims
+#export RBENVPATH=$HOME/.rbenv/shims
+# go
+export GOPATH=/usr/local/go/bin
+# SDCC
+export SDCCPATH=/Developer/SDCC/bin
+# mactex
+export MACTEXPATH=/usr/local/texlive/2013/bin/x86_64-darwin
+# ADT
+export ADTPATH=/Applications/eclipse/android/platform-tools
 
 ## left path
 PATH=$PLAN9PATH:$PATH
 PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
-PATH=$RBENVPATH:$PATH
+#PATH=$RBENVPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
+PATH=$GOPATH:$PATH
+PATH=$SDCCPATH:$PATH
+PATH=$MACTEXPATH:$PATH
+PATH=$ADTPATH:$PATH
 ## right path
+
+## additional
+#export RBENVGEMPATH=$HOME/.rbenv/versions/`ruby -v | cut -d " " -f 2 | sed -e 's/p/-p/g'`/bin
+#PATH=$RBENVGEMPATH:$PATH
 
 ## host specific path
 [ -f ~/.zshrc.local.path ] && source ~/.zshrc.local.path

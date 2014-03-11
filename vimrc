@@ -149,6 +149,8 @@ let g:tex_flavor='platex'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex $*'
 let g:Tex_ViewRule_pdf='/usr/bin/open -a /Applications/Preview.app'
+" go
+au BufRead,BufNewFile *.go set filetype=go
 
 
 "---------------------------------
@@ -216,11 +218,17 @@ endif
 "--------------------------------
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'Shougo/vimfiler'
-NeoBundle 'taglist.vim'
-NeoBundle 'Source-Explorer-srcexpl.vim'
+"NeoBundle 'taglist.vim'
+"NeoBundle 'Source-Explorer-srcexpl.vim'
 "NeoBundle 'scrooloose/syntastic'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'othree/html5.vim'
+NeoBundle 'othree/html5-syntax.vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin indent on
 
@@ -319,4 +327,10 @@ let g:vimfiler_as_default_explorer = 1
 " C-\ to jump to definition in vertically split
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-
+"---------------------------------
+" html5
+"---------------------------------
+let g:html5_event_handler_attributes_complete = 1
+let g:html5_rdfa_attributes_complete = 1
+let g:html5_microdata_attributes_complete = 1
+let g:html5_aria_attributes_complete = 1
