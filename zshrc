@@ -258,6 +258,15 @@ case ${UID} in
     ;;
 esac
 
+case ${TERM} in
+xterm|screen) #when xterm
+	LANG=C
+	LC_ALL=C
+	;;
+*)
+	;;
+esac
+
 ## host local locale >> ~/.zshrc.local.lang
 [ -f ~/.zshrc.local.lang ] && source ~/.zshrc.local.lang
 
@@ -289,6 +298,14 @@ C)
 	;;
 *)
 	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT %# "
+	;;
+esac
+
+case ${TERM} in
+xterm|screen)
+	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
+	;;
+*)
 	;;
 esac
 
