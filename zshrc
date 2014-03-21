@@ -262,7 +262,7 @@ case ${UID} in
 esac
 
 case ${TERM} in
-xterm|screen|vt100) #when xterm
+xterm|screen|vt100|vt220) #when xterm
 	LANG=C
 	LC_ALL=C
 	;;
@@ -305,7 +305,7 @@ C)
 esac
 
 case ${TERM} in
-xterm|screen|vt100)
+xterm|screen|vt100|vt220)
 	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
 	;;
 *)
