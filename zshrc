@@ -83,6 +83,8 @@ export SDCCPATH=/Developer/SDCC/bin
 export MACTEXPATH=/usr/local/texlive/2013/bin/x86_64-darwin
 # ADT
 export ADTPATH=/Applications/eclipse/android/platform-tools
+# X11R7
+export XELVPATH=/usr/X11R7/bin/
 
 ## left path
 PATH=$PLAN9PATH:$PATH
@@ -95,6 +97,7 @@ PATH=$SDCCPATH:$PATH
 PATH=$MACTEXPATH:$PATH
 PATH=$ADTPATH:$PATH
 ## right path
+PATH=$PATH:$XELVPATH
 
 ## additional
 #export RBENVGEMPATH=$HOME/.rbenv/versions/`ruby -v | cut -d " " -f 2 | sed -e 's/p/-p/g'`/bin
@@ -259,7 +262,7 @@ case ${UID} in
 esac
 
 case ${TERM} in
-xterm|screen) #when xterm
+xterm|screen|vt100) #when xterm
 	LANG=C
 	LC_ALL=C
 	;;
@@ -302,7 +305,7 @@ C)
 esac
 
 case ${TERM} in
-xterm|screen)
+xterm|screen|vt100)
 	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
 	;;
 *)
