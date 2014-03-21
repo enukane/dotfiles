@@ -1,0 +1,2 @@
+setxkbmap -layout jp
+xmonad
