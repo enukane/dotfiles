@@ -6,6 +6,7 @@ sudo pkg install zsh
 sudo pkg install vim
 sudo pkg install tmux
 sudo pkg install wget
+sudo pkg install the_silver_searcher
 
 git config --global user.email enukane@glenda9.org
 git config --global user.name enukane
