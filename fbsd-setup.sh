@@ -16,3 +16,18 @@ chsh -s `which zsh`
 echo "also don't forget to run..."
 echo "setup.sh and visudo"
 
+backupandset() {
+	echo "move current ${1} to ${1}.${DATE}"
+	[ -f ~/.${1} ] && mv ~/.$1 ~/.${1}.bak.${DATE}
+	echo make symlink to ${1}
+	ln -s ~/dotfiles/${1} ~/.${1}
+
+	return 1
+}
+
+backupandset xinitrc
+backupandset xsession
+backupandset xmonad
+backupandset xmobarrc
+
+

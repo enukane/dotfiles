@@ -13,16 +13,29 @@ export PKG_CACHE="/home/${USER}/Downloads/OpenBSD/${VERSION}-${ARCH}-packages"
 #echo INSTALLING git
 #pkg_add git
 echo INSTALLING zsh
-pkg_add zsh
+sudo pkg_add zsh
 echo INSTALLING vim
-pkg_add vim
+sudo pkg_add vim
 echo INSTALLING the_silver_searcher
-pkg_add the_silver_searcher
+sudo pkg_add the_silver_searcher
 echo INSTALLING xmonad
-pkg_add xmonad
-pkg_add xmonad-lib
+sudo pkg_add xmonad
+sudo pkg_add xmonad-lib
 
-echo xmonad >> /home/${USER}/.xsession
+backupandset() {
+	echo "move current ${1} to ${1}.${DATE}"
+	[ -f ~/.${1} ] && mv ~/.$1 ~/.${1}.bak.${DATE}
+	echo make symlink to ${1}
+	ln -s ~/dotfiles/${1} ~/.${1}
+
+	return 1
+}
+
+backupandset xinitrc
+backupandset xsession
+backupandset xmonad
+backupandset xmobarrc
+
 
 echo "REBOOT to enable settings"
 echo "also don't forget to run..."
