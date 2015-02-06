@@ -1,10 +1,40 @@
 "---------------------------------
+"---------------------------------
+" Vim
+"---------------------------------
+"---------------------------------
+
+"--------------------------------
+" Neobundle 
+"--------------------------------
+" neobundle path
+set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+" manage neobundle by neobundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" Plugin my plugin: add here
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vinarise'
+NeoBundle 'Shougo/vimfiler'
+
+
+" Finally
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
+
+
+"---------------------------------
 " encoding
 "---------------------------------
 set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
 set fileencodings=utf-8,euc-jp,iso2022-jp,shift-jis,utf-16,ucs-2-internal,ucs-2
+
 
 "---------------------------------
 " Vim general, system
@@ -13,8 +43,7 @@ set fileencodings=utf-8,euc-jp,iso2022-jp,shift-jis,utf-16,ucs-2-internal,ucs-2
 set nocompatible
 " set where to place swap files
 set directory=~/.swp
-" dir to search runtime file 
-set runtimepath+=$HOME/.vim,/$HOME/.vim/colors,$HOME/.vim/syntax,$HOME/.vim/,$HOME/.vim/ftpplugin
+
 " when macvim
 if has('gui_macvim')
 	set transparency=3
@@ -23,10 +52,6 @@ if has('gui_macvim')
 	set guioptions-=T
 endif
 
-if has('vim_starting')
-	set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
-endif
-call neobundle#rc(expand('~/.vim/bundle/'))
 
 "---------------------------------
 "  Editor Views
@@ -62,13 +87,61 @@ set list
 " char of visible TAB/EOL
 set listchars=tab:^_,trail:~
 " specify color scheme
-colorscheme minecolor
+" colorscheme minecolor
 " set background
 set background=dark
 " set cursorline color
 highlight CursorLine ctermfg=Red
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ?  getcmdtype() == '?' ? '\?' : '?'
+
+" change status line color in INPUT MODE
+let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+if has('syntax')
+	augroup InsertHook
+		autocmd!
+		autocmd InsertEnter * call s:StatusLine('Enter')
+		autocmd InsertLeave * call s:StatusLine('Leave')
+	augroup END
+endif
+let s:slhlcmd = ''
+function! s:StatusLine(mode)
+	if a:mode == 'Enter'
+		silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
+		silent exec g:hi_insert
+	else
+		highlight clear StatusLine
+		silent exec s:slhlcmd
+	endif
+endfunction
+function! s:GetHighlight(hi)
+	redir => hl
+	exec 'highlight '.a:hi
+	redir END
+	let hl = substitute(hl, '[\r\n]', '', 'g')
+	let hl = substitute(hl, 'xxx', '', '')
+	return hl
+endfunction
+
+" Show ZENKAKU space
+function! ZenkakuSpace()
+	highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+	silent! match ZenkakuSpace /　/
+endfunction
+if has('syntax')
+	augroup ZenkakuSpace
+		autocmd!
+		autocmd VimEnter,BufEnter * call ZenkakuSpace()
+	augroup END
+endif
+
+" highlight > 80 character line
+" 	from http://vim-users.jp/2011/05/hack217/
+set textwidth=80
+if exists('&colorcolumn')
+	set colorcolumn=+1
+endif
+
 
 "---------------------------------
 "  Searching
@@ -104,6 +177,28 @@ set backspace=2
 set formatoptions+=mM
 
 
+
+"---------------------------------
+"---------------------------------
+" language specific
+"---------------------------------
+"---------------------------------
+
+"---------------------------------
+" generic
+"---------------------------------
+filetype on 
+filetype indent on
+filetype plugin on
+
+
+
+"---------------------------------
+"---------------------------------
+" external
+"---------------------------------
+"---------------------------------
+
 "---------------------------------
 " gtags 
 "---------------------------------
@@ -126,111 +221,12 @@ map <C-n> :cn<CR>
 map <C-p> :cp<CR>
 
 
-"---------------------------------
-" Language specific
-"---------------------------------
-filetype on 
-filetype indent on
-filetype plugin on
-"" language spacific settings
-" Gauche
-autocmd FileType scheme :let is_gauche=1
-" ruby
-autocmd FileType rb setlocal shiftwidth=2 softtabstop=2  expandtab
-autocmd FileType ruby,eruby setlocal softtabstop=2 shiftwidth=2 expandtab
-"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-" scala
-autocmd FileType scala setlocal softtabstop=2 shiftwidth=2 expandtab
-" tex
-set shellslash
-set grepprg=grep\ -nH\$*
-let g:tex_flavor='platex'
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_CompileRule_pdf='xelatex $*'
-let g:Tex_ViewRule_pdf='/usr/bin/open -a /Applications/Preview.app'
-" go
-au BufRead,BufNewFile *.go set filetype=go
-
 
 "---------------------------------
-" change status line color in INPUT MODE
 "---------------------------------
-let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
-
-if has('syntax')
-	augroup InsertHook
-		autocmd!
-		autocmd InsertEnter * call s:StatusLine('Enter')
-		autocmd InsertLeave * call s:StatusLine('Leave')
-	augroup END
-endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-	if a:mode == 'Enter'
-		silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-		silent exec g:hi_insert
-	else
-		highlight clear StatusLine
-		silent exec s:slhlcmd
-	endif
-endfunction
-
-function! s:GetHighlight(hi)
-	redir => hl
-	exec 'highlight '.a:hi
-	redir END
-	let hl = substitute(hl, '[\r\n]', '', 'g')
-	let hl = substitute(hl, 'xxx', '', '')
-	return hl
-endfunction
-
+" external
 "---------------------------------
-" Show ZENKAKU space
 "---------------------------------
-function! ZenkakuSpace()
-	highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
-	silent! match ZenkakuSpace /　/
-endfunction
-if has('syntax')
-	augroup ZenkakuSpace
-		autocmd!
-		autocmd VimEnter,BufEnter * call ZenkakuSpace()
-	augroup END
-endif
-
-"--------------------------------
-" highlight > 80 character line
-" 	from http://vim-users.jp/2011/05/hack217/
-"--------------------------------
-set textwidth=80
-if exists('&colorcolumn')
-	set colorcolumn=+1
-endif
-
-"--------------------------------
-" plugins
-"--------------------------------
-
-"--------------------------------
-" Neobundle 
-"--------------------------------
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vinarise'
-NeoBundle 'Shougo/vimfiler'
-"NeoBundle 'taglist.vim'
-"NeoBundle 'Source-Explorer-srcexpl.vim'
-"NeoBundle 'scrooloose/syntastic'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'othree/html5-syntax.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'tpope/vim-fugitive'
-
-filetype plugin indent on
 
 "---------------------------------
 " NeocomplCache
@@ -264,73 +260,4 @@ let g:neocomplcache_dictionary_filetype_lists = {
 			\ 'ruby' : $HOME . '/.vim/dict/ruby.dict'
 			\}
 
-"---------------------------------
-" format.vim 
-"---------------------------------
-let format_allow_over_tw=1
 
-"--------------------------------
-" source explorer
-"--------------------------------
-" refresh rate (msec)
-let g:SrcExpl_RefreshTime = 1
-" window Height of SrcExpl window
-let g:SrcExpl_winHeight = 8
-" toggle to srcexpl
-nmap <F7> :SrcExplToggle<CR>
-" go back from srcexpl
-let g:SrcExpl_GoBackMapKey = "<F6>>"
-" Set Jump key into exact definition
-let g:SrcExpl_jumpKey = "<F5>"
-" plugins
- let g:SrcExpl_pluginList = [
-         \ "__Tag_List__",
-         \ "_NERD_tree_",
-         \ "Source_Explorer"
-     \ ]
-" update tag file
-let g:SrcExpl_updateTagsKey = "<F12>"
-" local definition search
-let g:SrcExpl_searchLocalDef = 1
-" ctags
-let g:SrcExpl_updateTagsCmd = "exctags --sort=foldcase -R . "
-
-
-"--------------------------------
-" pathogen
-"--------------------------------
-call pathogen#infect()
-syntax on
-filetype plugin indent on
-
-"--------------------------------
-" syntastic 
-"--------------------------------
-"let g:syntastic_mode_map = { 'mode': 'active',
-"	\ 'active_filetypes': [],
-"	\ 'passive_filetypes': ['html', 'less'] }
-"let g:syntastic_enable_signs=1
-"let g:syntastic_auto_jump=1
-"let g:syntastic_auto_loc_list=2
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"--------------------------------
-" vim-filer
-"--------------------------------
-let g:vimfiler_as_default_explorer = 1
-
-"---------------------------------
-" ctags 
-"---------------------------------
-" C-\ to jump to definition in vertically split
-map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
-"---------------------------------
-" html5
-"---------------------------------
-let g:html5_event_handler_attributes_complete = 1
-let g:html5_rdfa_attributes_complete = 1
-let g:html5_microdata_attributes_complete = 1
-let g:html5_aria_attributes_complete = 1
