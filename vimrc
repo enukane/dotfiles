@@ -14,11 +14,14 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " manage neobundle by neobundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" --
 " Plugin my plugin: add here
+" --
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'Shougo/vimfiler'
+NeoBundle 'tpope/vim-fugitive'
 
 
 " Finally
