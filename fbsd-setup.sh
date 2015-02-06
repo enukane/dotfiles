@@ -2,10 +2,27 @@
 
 # run as root
 # install git & sudo first
-sudo pkg install zsh
+
+echo "============================="
+echo "= install required packages ="
+echo "=                           ="
+echo "=         - vim             ="
+echo "=         - tmux            ="
+echo "=         - git             ="
+echo "=         - zsh             ="
+echo "=         - wget            ="
+echo "=         - screen          ="
+echo "=         - ag              ="
+echo "=                           ="
+echo "============================="
+echo ""
+
 sudo pkg install vim
 sudo pkg install tmux
+sudo pkg install git
+sudo pkg install zsh
 sudo pkg install wget
+sudo pkg install screen
 sudo pkg install the_silver_searcher
 
 git config --global user.email enukane@glenda9.org
