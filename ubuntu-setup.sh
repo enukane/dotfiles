@@ -24,14 +24,8 @@ if [ "${line}" != "YES" ]; then
   exit 1
 fi
 
-echo -n ">> checking previledge: "
-if [ "${USER}" != "root" ]; then
-  echo  "${USER} is not root!"
-  exit 2
-fi
-
 echo ">> proceed to installing"
-aptitude install vim tmux git zsh screen
+sudo aptitude install vim tmux git zsh screen
 
 echo ">> done"
 
