@@ -37,6 +37,12 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'so=32' 'pi=33' 'ex=31' 'bd=4
 autoload -U colors
 colors
 
+# show git branch
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
+zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
+precmd () { vcs_info }
+
 
 
 ########################################
@@ -321,7 +327,7 @@ xterm|screen|vt100|vt220)
 esac
 
 # RPROMPT
-RPROMPT="(%W %T)"
+RPROMPT="[${vcs_info_msg_0_}](%W %T)"
 
 # host specific prompt
 [ -f ~/.zshrc.local.prompt ] && source ~/.zshrc.local.prompt
