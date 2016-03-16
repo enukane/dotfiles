@@ -318,10 +318,6 @@ SEVERITY=0
 local PROMPTCOLOR=${BLUE}
 [ -f ~/.zshrc.local.severity ] && source ~/.zshrc.local.severity
 case ${SEVERITY} in
-0|*)
-	# don't care: default
-	PROMPTCOLOR=${BLUE}
-	;;
 1)
 	# watch!: main machine
 	PROMPTCOLOR=${GREEN}
@@ -342,6 +338,10 @@ case ${SEVERITY} in
 	# dangerous
 	PROMPTCOLOR=${BACKRED}
 	;;
+"0"|*)
+	# don't care: default
+	PROMPTCOLOR=${BLUE}
+	;;
 esac
 
 
@@ -361,7 +361,7 @@ esac
 
 case ${TERM} in
 xterm|screen|vt100|vt220)
-	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
+	PROMPT="[$WHITE%B%n%b@${PROMPTCOLOR}%m$DEFAULT] $CYAN%~$DEFAULT %# "
 	;;
 *)
 	;;
