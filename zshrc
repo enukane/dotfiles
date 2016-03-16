@@ -305,10 +305,45 @@ local WHITE=$'%{\e[1;37m%}'
 local CYAN=$'%{\e[1;36m%}'
 local GREEN=$'%{\e[1;32m%}'
 local YELLOW=$'%{\e[1;33m%}'
-local BLUE=$'%{\e[1;34m%}'
+local BLUE=$'%{\e[1;94m%}'
+local MAGENDA=$'%{\e[1;m%}'
 local RED=$'%{\e[1;31m%}'
+local LIGHTRED=$'%{\e[1;91m%}'
 local CLEARBLUE=$'%{\e[1;36m%}'
+local BACKRED=$'%{\e[1;41m%}'
 local DEFAULT=$'%{\e[1;0m%}'
+
+## host severity (SEVERITY) defined here
+SEVERITY=0
+local PROMPTCOLOR=${BLUE}
+[ -f ~/.zshrc.local.severity ] && source ~/.zshrc.local.severity
+case ${SEVERITY} in
+0|*)
+	# don't care: default
+	PROMPTCOLOR=${BLUE}
+	;;
+1)
+	# watch!: main machine
+	PROMPTCOLOR=${GREEN}
+	;;
+2)
+	# watch out!: shared machine (don't mess)
+	PROMPTCOLOR=${YELLOW}
+	;;
+3)
+	# high: server or hub, don't be stupid
+	PROMPTCOLOR=${MAGENDA}
+	;;
+4)
+	# very high
+	PROMPTCOLOR=${LIGHTRED}
+	;;
+5)
+	# dangerous
+	PROMPTCOLOR=${BACKRED}
+	;;
+esac
+
 
 ## RPROMPT
 # default PROMPT
@@ -316,10 +351,10 @@ local DEFAULT=$'%{\e[1;0m%}'
 # PROMPT definition
 case ${LANG} in
 C)
-	PROMPT="[$WHITE%B%n%b@$GREEN%m$DEFAULT] $CYAN%~$DEFAULT %# "
+	PROMPT="[$WHITE%B%n%b@${PROMPTCOLOR}%m$DEFAULT] $CYAN%~$DEFAULT %# "
 	;;
 *)
-	PROMPT="$WHITE%B%n%b@$GREEN%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT
+	PROMPT="$WHITE%B%n%b@${PROMPTCOLOR}%m$DEFAULTなう（´・ω・｀）つ %~$DEFAULT
 %# "
 	;;
 esac
