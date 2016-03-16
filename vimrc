@@ -5,29 +5,56 @@
 "---------------------------------
 
 "--------------------------------
-" Neobundle 
+" Dein
 "--------------------------------
-" neobundle path
-set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+if &compatible
+  set nocompatible
+endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-" manage neobundle by neobundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+set runtimepath^=$HOME/.dein/repos/github.com/Shougo/dein.vim
+call dein#begin(expand('$HOME/.dein'))
 
-" --
-" Plugin my plugin: add here
-" --
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vinarise'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'tpope/vim-fugitive'
+call dein#add('Shougo/dein.vim')
+"call dein#add(expand('~/.dein/repos/github.com/Shougo/dein.vim'))
+call dein#add('Shougo/neocomplcache')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/vinarise')
+call dein#add('Shougo/vimfiler')
+call dein#add('tpope/vim-fugitive')
+
+call dein#end()
+filetype plugin indent on
+if dein#check_install()
+	call dein#install()
+endif
+
+""--------------------------------
+"" Neobundle 
+""--------------------------------
+"" neobundle path
+"set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+"
+"call neobundle#begin(expand('~/.vim/bundle/'))
+"" manage neobundle by neobundle
+"NeoBundleFetch 'Shougo/neobundle.vim'
+"
+"" --
+"" Plugin my plugin: add here
+"" --
+"NeoBundle 'Shougo/neocomplcache'
+"NeoBundle 'Shougo/unite.vim'
+"NeoBundle 'Shougo/vinarise'
+"NeoBundle 'Shougo/vimfiler'
+"NeoBundle 'tpope/vim-fugitive'
+""NeoBundle 'ingydotnet/yaml-vim'
+"NeoBundle 'mrk21/yaml-vim'
+"NeoBundle 'hashivim/vim-vagrant'
 
 
 " Finally
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
+"call neobundle#end()
+"filetype plugin indent on
+"NeoBundleCheck
 
 
 "---------------------------------
