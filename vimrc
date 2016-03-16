@@ -186,6 +186,9 @@ set formatoptions+=mM
 " language specific
 "---------------------------------
 "---------------------------------
+" ruby
+autocmd FileType rb setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType ruby,eruby setlocal softtabstop=2 shiftwidth=2 expandtab
 
 "---------------------------------
 " generic
