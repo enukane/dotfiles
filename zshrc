@@ -144,6 +144,12 @@ alias gs="git status --short --branch"
 ### misc                  ##
 ############################
 
+function colorcheck() {
+	echo ${WHITE}white${CYAN}cyan${GREEN}green${YELLOW}yellow${BLUE}blue
+	echo ${MAGENDA}magenda${RED}red${LIGHTRED}lightred${CLEARBLUE}clearblue
+	echo ${BACKRED}backred${DEFAULT}default
+}
+
 function md() {
 	mkdir -p "$@" && cd "$1"
 }
@@ -306,7 +312,6 @@ local CYAN=$'%{\e[1;36m%}'
 local GREEN=$'%{\e[1;32m%}'
 local YELLOW=$'%{\e[1;33m%}'
 local BLUE=$'%{\e[1;94m%}'
-local MAGENDA=$'%{\e[1;m%}'
 local RED=$'%{\e[1;31m%}'
 local LIGHTRED=$'%{\e[1;91m%}'
 local CLEARBLUE=$'%{\e[1;36m%}'
@@ -317,6 +322,7 @@ local DEFAULT=$'%{\e[1;0m%}'
 SEVERITY=0
 local PROMPTCOLOR=${BLUE}
 [ -f ~/.zshrc.local.severity ] && source ~/.zshrc.local.severity
+echo ${SEVERITY}
 case ${SEVERITY} in
 1)
 	# watch!: main machine
@@ -328,15 +334,11 @@ case ${SEVERITY} in
 	;;
 3)
 	# high: server or hub, don't be stupid
-	PROMPTCOLOR=${MAGENDA}
+	PROMPTCOLOR=${RED}
 	;;
 4)
-	# very high
-	PROMPTCOLOR=${LIGHTRED}
-	;;
-5)
 	# dangerous
-	PROMPTCOLOR=${BACKRED}
+	PROMPTCOLOR=${DEFAULT}${BACKRED}
 	;;
 "0"|*)
 	# don't care: default
