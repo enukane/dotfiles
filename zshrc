@@ -126,6 +126,11 @@ alias scrr='screen -U -D -RR'
 alias s='screen -U'
 alias up="cd ../;"
 `which ag` > /dev/null 2>&1  && [ -f `which ag` ] && alias grep=ag
+alias g="ag"
+alias v="vim"
+alias im="vim"
+alias m="vim"
+alias gs="git status --short --branch"
 
 
 
