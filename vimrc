@@ -21,6 +21,10 @@ call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vinarise')
 call dein#add('Shougo/vimfiler')
 call dein#add('tpope/vim-fugitive')
+call dein#add('fatih/vim-go', {'autoload' : {'filetypes' : 'go'}, 'lasy': 1})
+call dein#add('lyuts/vim-rtags')
+call dein#add('moro/vim-review')
+call dein#add('itchyny/lightline.vim')
 
 call dein#end()
 filetype plugin indent on
@@ -217,6 +221,9 @@ set formatoptions+=mM
 autocmd FileType rb setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType ruby,eruby setlocal softtabstop=2 shiftwidth=2 expandtab
 
+" re
+autocmd FileType review setlocal textwidth=0
+
 "---------------------------------
 " generic
 "---------------------------------
@@ -293,4 +300,41 @@ let g:neocomplcache_dictionary_filetype_lists = {
 			\ 'ruby' : $HOME . '/.vim/dict/ruby.dict'
 			\}
 
+"---------------------------------
+" vim-go
+"---------------------------------
+augroup filetype-go
+    autocmd!
+    autocmd FileType go setlocal tabstop=4
+    autocmd FileType go setlocal shiftwidth=4
+    autocmd FileType go let g:auto_ctags = 1
+    autocmd FileType go let g:go_fmt_fail_silently = 1
+    autocmd FileType go let g:go_highlight_functions = 1
+    autocmd FileType go let g:go_highlight_methods = 1
+    autocmd FileType go let g:go_highlight_structs = 1
+    autocmd FileType go let g:go_highlight_operators = 1
+    autocmd FileType go let g:go_highlight_build_constraints = 1
+    autocmd FileType go let g:go_play_open_browser = 0
+    autocmd FileType go let g:go_fmt_command = 'goimports'
 
+"----
+" vim-rtags
+"----
+nnoremap <silent> <F3> :call rtags#JumpTo()<CR>
+nnoremap <silent> <F4> :<C-u>Unite<Space>rtags/references<CR>
+nnoremap <silent> <F5> :call rtags#JumpToParent()<CR>
+
+"----
+" lightline.vim
+"----
+set laststatus=2
+if !has('gui_running')
+	set t_Co=256
+endif
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'component': {
+\   'readonly': '%{&readonly?"[RO]":""}',
+\ },
+\ 'subseparator': { 'left': '>>', 'right': '<<' },
+\ }
