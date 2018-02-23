@@ -21,6 +21,10 @@ echo make vim/bundle
 mkdir -p ~/.vim/bundle/
 git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
+echo make dein
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+sh ./installer.sh $HOME/.dein
+
 echo move current .swp to .swp.bak.$DATE
 [ -d ~/.swp ] && mv ~/.swp ~/.swp.bak.$DATE
 mkdir ~/.swp
