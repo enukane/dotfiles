@@ -57,6 +57,7 @@ HISTFILE=~/.zshhistory
 HISTSIZE=50000
 SAVEHIST=50000
 export EDITOR=vim
+export LESS='-g -i -M -R -S -W -z-4 -x4'
 
 ## host specific variables
 [ -f ~/.zshrc.local.variables ] && source ~/.zshrc.local.variables
@@ -82,7 +83,6 @@ export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
 # rbenv
 #export RBENVPATH=$HOME/.rbenv/shims
 # go
-export GOPATH=/usr/local/go/bin
 # SDCC
 export SDCCPATH=/Developer/SDCC/bin
 # mactex
@@ -98,7 +98,6 @@ PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
 #PATH=$RBENVPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
-PATH=$GOPATH:$PATH
 PATH=$SDCCPATH:$PATH
 PATH=$MACTEXPATH:$PATH
 PATH=$ADTPATH:$PATH
@@ -257,9 +256,36 @@ function unregd() {
 	echo "directory unregistered : `cat $REGD`"
 }
 
+function echod() {
+	echo -n `cat $REGD`
+}
+
 # reload zshrc
 function reload() {
         source $HOME/.zshrc
+}
+
+# zip with password
+function zipdirpass() {
+	# $1 : target to compress
+	# $2 : output (*.zip9
+	local target=$1
+	local output=$2
+
+	if [ "x$1" = "x-h" ]; then
+		echo "zipdirpass targetdir output"
+		return 0
+	fi
+	if [ ! $output ]; then
+		output=$1.zip
+	fi
+
+	echo "Compressing target='$target' into '$output' with password"
+	zip -e -r $output $target
+}
+
+function console() {
+	$HOME/bin/utils/console
 }
 
 ## host specific commands
@@ -393,3 +419,15 @@ RPROMPT="[${vcs_info_msg_0_}](%W %T)"
 ###
 ########################################
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+PATH="/Users/enukane/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/enukane/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/enukane/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/enukane/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/enukane/perl5"; export PERL_MM_OPT;
+
+
+. /Users/enukane/torch/install/bin/torch-activate
+
+#printf "\e[?1004l"
+#eval $(/usr/libexec/path_helper -s)

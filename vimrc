@@ -25,6 +25,9 @@ call dein#add('fatih/vim-go', {'autoload' : {'filetypes' : 'go'}, 'lasy': 1})
 call dein#add('lyuts/vim-rtags')
 call dein#add('moro/vim-review')
 call dein#add('itchyny/lightline.vim')
+call dein#add('pangloss/vim-javascript')
+call dein#add('msanders/cocoa.vim')
+
 
 call dein#end()
 filetype plugin indent on
@@ -223,6 +226,12 @@ autocmd FileType ruby,eruby setlocal softtabstop=2 shiftwidth=2 expandtab
 
 " re
 autocmd FileType review setlocal textwidth=0
+
+"js
+autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+
+"html
+autocmd filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 
 "---------------------------------
 " generic
