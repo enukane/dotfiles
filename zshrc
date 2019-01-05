@@ -83,6 +83,7 @@ export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
 # rbenv
 #export RBENVPATH=$HOME/.rbenv/shims
 # go
+export GOBINPATH=$HOME/.go/bin
 # SDCC
 export SDCCPATH=/Developer/SDCC/bin
 # mactex
@@ -98,6 +99,7 @@ PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
 #PATH=$RBENVPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
+PATH=$GOBINPATH:$PATH
 PATH=$SDCCPATH:$PATH
 PATH=$MACTEXPATH:$PATH
 PATH=$ADTPATH:$PATH
@@ -129,7 +131,7 @@ alias g="ag"
 alias v="vim"
 alias im="vim"
 alias m="vim"
-alias gs="git status --short --branch"
+alias gits="git status --short --branch"
 
 
 
@@ -411,7 +413,15 @@ RPROMPT="[${vcs_info_msg_0_}](%W %T)"
 ## rbenv
 `which rbenv` > /dev/null 2>&1  && eval "$(rbenv init -)"
 
-
+## pyenv
+if type pyenv >/dev/null 2>&1 ; then
+	echo PYENV
+	PYENV_ROOT=~/.pyenv
+	export VIRTUAL_ENV_DISABLE_PROMPT=1
+	export PATH=$PYENV_ROOT/bin:$PATH
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
 
 ########################################
 ###
@@ -429,5 +439,6 @@ PERL_MM_OPT="INSTALL_BASE=/Users/enukane/perl5"; export PERL_MM_OPT;
 
 . /Users/enukane/torch/install/bin/torch-activate
 
-#printf "\e[?1004l"
+# disable bracket paste mode off
+printf '\e[?2004l'
 #eval $(/usr/libexec/path_helper -s)

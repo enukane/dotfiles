@@ -27,7 +27,9 @@ call dein#add('moro/vim-review')
 call dein#add('itchyny/lightline.vim')
 call dein#add('pangloss/vim-javascript')
 call dein#add('msanders/cocoa.vim')
-
+call dein#add('andymass/vim-matchup')
+"call dein#add('mattn/vim-trex')
+call dein#add('stephpy/vim-yaml')
 
 call dein#end()
 filetype plugin indent on
@@ -87,6 +89,8 @@ if has('gui_macvim')
 	set guifont=Menlo:h21
 	set lines=90 columns=200
 	set guioptions-=T
+	set vb t_vb=
+	set bellof=all
 endif
 
 
@@ -232,6 +236,9 @@ autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
 "html
 autocmd filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+
+"md
+autocmd filetype markdown setlocal textwidth=0
 
 "---------------------------------
 " generic
