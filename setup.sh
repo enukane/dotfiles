@@ -41,6 +41,10 @@ echo move current .tmux.conf to .tmux.conf.bak.$DATE
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf.bak.$DATE
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 
+echo move current .tmux to .tmux.bak.$DATE
+[ -f ~/.tmux ] && mv ~/.tmux ~/.tmux.bak.$DATE
+ln -s ~/dotfiles/tmux ~/.tmux
+
 backupandset() {
 	echo "move current ${1} to ${1}.${DATE}"
 	[ -f ~/.${1} ] && mv ~/.$1 ~/.${1}.bak.${DATE}

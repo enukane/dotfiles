@@ -53,11 +53,13 @@ precmd () { vcs_info }
 
 ### terminal config related
 export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-HISTFILE=~/.zshhistory
-HISTSIZE=50000
-SAVEHIST=50000
+export HISTFILE=~/.zshhistory
+export HISTSIZE=50000
+export SAVEHIST=50000
 export EDITOR=vim
 export LESS='-g -i -M -R -S -W -z-4 -x4'
+#### separate ctrl+w with '/'
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 ## host specific variables
 [ -f ~/.zshrc.local.variables ] && source ~/.zshrc.local.variables
@@ -81,9 +83,11 @@ export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin:$HOME/usr/pkg/bin:$HOME/usr/pkg/sbi
 # home bin
 export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
 # rbenv
-#export RBENVPATH=$HOME/.rbenv/shims
+export RBENVPATH=$HOME/.rbenv/shims
 # go
-export GOBINPATH=$HOME/.go/bin
+export GOBINPATH=/usr/local/go/bin
+export GOPATH=$HOME/go
+export GOMYBINPATH=$GOPATH/bin
 # SDCC
 export SDCCPATH=/Developer/SDCC/bin
 # mactex
@@ -97,9 +101,10 @@ export XELVPATH=/usr/X11R7/bin/
 PATH=$PLAN9PATH:$PATH
 PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
-#PATH=$RBENVPATH:$PATH
+PATH=$RBENVPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
 PATH=$GOBINPATH:$PATH
+PATH=$GOMYBINPATH:$PATH
 PATH=$SDCCPATH:$PATH
 PATH=$MACTEXPATH:$PATH
 PATH=$ADTPATH:$PATH
@@ -290,6 +295,14 @@ function console() {
 	$HOME/bin/utils/console
 }
 
+function cphere() {
+	cp $1 ./
+}
+
+function cpdirhere() {
+	cp -r $1 ./
+}
+
 ## host specific commands
 [ -f ~/.zshrc.local.command ] && source ~/.zshrc.local.command
 
@@ -417,10 +430,10 @@ RPROMPT="[${vcs_info_msg_0_}](%W %T)"
 if type pyenv >/dev/null 2>&1 ; then
 	echo PYENV
 	PYENV_ROOT=~/.pyenv
-	export VIRTUAL_ENV_DISABLE_PROMPT=1
+	#export VIRTUAL_ENV_DISABLE_PROMPT=1
 	export PATH=$PYENV_ROOT/bin:$PATH
 	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
+	#eval "$(pyenv virtualenv-init -)"
 fi
 
 ########################################
@@ -437,7 +450,7 @@ PERL_MB_OPT="--install_base \"/Users/enukane/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/enukane/perl5"; export PERL_MM_OPT;
 
 
-. /Users/enukane/torch/install/bin/torch-activate
+#. /Users/enukane/torch/install/bin/torch-activate
 
 # disable bracket paste mode off
 printf '\e[?2004l'

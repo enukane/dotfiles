@@ -30,6 +30,9 @@ call dein#add('msanders/cocoa.vim')
 call dein#add('andymass/vim-matchup')
 "call dein#add('mattn/vim-trex')
 call dein#add('stephpy/vim-yaml')
+call dein#add('keith/swift.vim')
+call dein#add('elixir-lang/vim-elixir')
+call dein#add('CoatiSoftware/vim-sourcetrail')
 
 call dein#end()
 filetype plugin indent on
@@ -103,6 +106,7 @@ set shortmess+=I
 set title
 " enable mode line
 set modeline
+set modelines=5
 " show wildmenu
 set wildmenu
 " show line numbers
@@ -144,6 +148,7 @@ if has('syntax')
 		autocmd InsertEnter * call s:StatusLine('Enter')
 		autocmd InsertLeave * call s:StatusLine('Leave')
 	augroup END
+	autocmd BufNewFile,BufRead *.asm set filetype=nasm
 endif
 let s:slhlcmd = ''
 function! s:StatusLine(mode)
@@ -239,6 +244,12 @@ autocmd filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 
 "md
 autocmd filetype markdown setlocal textwidth=0
+
+"swift
+autocmd filetype swift setlocal shiftwidth=2 softtabstop=2 expandtab
+
+"elixir
+autocmd filetype elixir setlocal shiftwidth=2 softtabstop=2 expandtab
 
 "---------------------------------
 " generic
