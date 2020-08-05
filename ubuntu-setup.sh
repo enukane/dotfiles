@@ -25,7 +25,7 @@ if [ "${line}" != "YES" ]; then
 fi
 
 echo ">> proceed to installing"
-sudo aptitude install vim tmux git zsh screen
+sudo apt install vim tmux git zsh screen
 
 echo ">> done"
 
