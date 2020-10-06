@@ -13,7 +13,7 @@ echo "=         - tmux            ="
 echo "=         - git             ="
 echo "=         - zsh             ="
 echo "=         - screen          ="
-echo "=         - curl          ="
+echo "=         - curl            ="
 echo "=                           ="
 echo "============================="
 
@@ -26,7 +26,7 @@ if [ "${line}" != "YES" ]; then
 fi
 
 echo ">> proceed to installing"
-sudo apt install vim tmux git zsh screen
+sudo apt install -y vim tmux git zsh screen curl
 
 echo ">> done"
 
