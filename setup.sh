@@ -32,6 +32,12 @@ mkdir ~/.swp
 echo make swap dir for vim
 mkdir ~/.swp
 
+echo make Dev dir
+[ ! -d "~/Dev" ] && mkdir ~/Dev
+
+echo make Sources Dir
+[ ! -d "~/Sources" ] && mkdir ~/Sources
+
 echo move current .screenrc to .screenrc.bak.$DATE
 [ -f ~/.screenrc ] && mv ~/.screenrc ~/.screenrc.bak.$DATE
 echo make symlink to screenrc
