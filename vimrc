@@ -33,6 +33,11 @@ call dein#add('stephpy/vim-yaml')
 call dein#add('keith/swift.vim')
 call dein#add('elixir-lang/vim-elixir')
 call dein#add('CoatiSoftware/vim-sourcetrail')
+call dein#add('rust-lang/rust.vim')
+" call dein#add('joshdick/onedark.vim')
+call dein#add('tomasr/molokai')
+call dein#add('pboettch/vim-cmake-syntax')
+call dein#add('lighttiger2505/gtags.vim')
 
 call dein#end()
 filetype plugin indent on
@@ -106,7 +111,7 @@ set shortmess+=I
 set title
 " enable mode line
 set modeline
-set modelines=5
+set modelines=20
 " show wildmenu
 set wildmenu
 " show line numbers
@@ -133,9 +138,11 @@ set list
 set listchars=tab:^_,trail:~
 " specify color scheme
 " colorscheme minecolor
+colorscheme torte
+let g:molokai_original = 1
 " set background
-set background=dark
-" set cursorline color
+" set background=dark
+"set cursorline color
 highlight CursorLine ctermfg=Red
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ?  getcmdtype() == '?' ? '\?' : '?'
@@ -183,10 +190,10 @@ endif
 
 " highlight > 80 character line
 " 	from http://vim-users.jp/2011/05/hack217/
-set textwidth=80
-if exists('&colorcolumn')
+"set textwidth=80
+"if exists('&colorcolumn')
 	set colorcolumn=+1
-endif
+"endif
 
 
 "---------------------------------
@@ -229,6 +236,9 @@ set formatoptions+=mM
 " language specific
 "---------------------------------
 "---------------------------------
+"c
+autocmd FileType c setlocal expandtab softtabstop=4 shiftwidth=2
+autocmd FileType cpp setlocal expandtab softtabstop=4 shiftwidth=2
 " ruby
 autocmd FileType rb setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType ruby,eruby setlocal softtabstop=2 shiftwidth=2 expandtab
@@ -359,9 +369,22 @@ if !has('gui_running')
 	set t_Co=256
 endif
 let g:lightline = {
-\ 'colorscheme': 'wombat',
+\ 'colorscheme': 'molokai',
 \ 'component': {
 \   'readonly': '%{&readonly?"[RO]":""}',
 \ },
 \ 'subseparator': { 'left': '>>', 'right': '<<' },
 \ }
+
+"---
+" git-fugitive
+"---
+set diffopt+=vertical
+
+"---
+" gtags.vim
+"---
+map <C-h> :Gtags -f %<CR>
+map <C-j> :GtagsCursor<CR>
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>

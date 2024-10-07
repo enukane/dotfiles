@@ -43,6 +43,7 @@ zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd () { vcs_info }
 
+bindkey -e
 
 
 ########################################
@@ -84,10 +85,14 @@ export PKGSRCPATH=/usr/pkg/bin:/usr/pkg/sbin:$HOME/usr/pkg/bin:$HOME/usr/pkg/sbi
 export HOMEBINPATH=$HOME/bin:$HOME/bin/utils:$HOME/usr/bin:$HOME/usr/local/bin
 # rbenv
 export RBENVPATH=$HOME/.rbenv/shims
+# cargo
+export CARGOPATH=$HOME/.cargo/bin
 # go
 export GOBINPATH=/usr/local/go/bin
+#export GOPATH=$HOME/go
 export GOPATH=$HOME/go
-export GOMYBINPATH=$GOPATH/bin
+#export GOMYBINPATH=$GOPATH/bin
+export GOMYBINPATH="$HOME/go/bin"
 # SDCC
 export SDCCPATH=/Developer/SDCC/bin
 # mactex
@@ -102,6 +107,7 @@ PATH=$PLAN9PATH:$PATH
 PATH=$GENTOOPATH:$PATH
 PATH=$PKGSRCPATH:$PATH
 PATH=$RBENVPATH:$PATH
+PATH=$CARGOPATH:$PATH
 PATH=$HOMEBINPATH:$PATH
 PATH=$GOBINPATH:$PATH
 PATH=$GOMYBINPATH:$PATH
@@ -272,6 +278,10 @@ function reload() {
         source $HOME/.zshrc
 }
 
+function cd2macinclude() {
+	cd /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/
+}
+
 # zip with password
 function zipdirpass() {
 	# $1 : target to compress
@@ -425,6 +435,7 @@ RPROMPT="[${vcs_info_msg_0_}](%W %T)"
 ########################################
 ## rbenv
 `which rbenv` > /dev/null 2>&1  && eval "$(rbenv init -)"
+`which rbenv` > /dev/null 2>&1 && export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 ## pyenv
 if type pyenv >/dev/null 2>&1 ; then
