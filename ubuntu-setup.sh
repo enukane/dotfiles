@@ -13,6 +13,7 @@ echo "=         - tmux            ="
 echo "=         - git             ="
 echo "=         - zsh             ="
 echo "=         - screen          ="
+echo "=         - curl            ="
 echo "=                           ="
 echo "============================="
 
@@ -25,7 +26,7 @@ if [ "${line}" != "YES" ]; then
 fi
 
 echo ">> proceed to installing"
-sudo apt install vim tmux git zsh screen
+sudo apt install -y vim tmux git zsh screen curl
 
 echo ">> done"
 
@@ -40,6 +41,11 @@ echo ">> done"
 
 echo ">> Changing shell to zsh"
 chsh -s `which zsh`
+echo ">> done"
+
+echo ">> installing dein"
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/installer.sh
+sh /tmp/installer.sh ~/.cache/dein
 echo ">> done"
 
 echo ">> Initializer done"

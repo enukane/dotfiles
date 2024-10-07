@@ -7,12 +7,13 @@
 "--------------------------------
 " Dein
 "--------------------------------
+"dein Scripts-----------------------------
 if &compatible
-  set nocompatible
+  set nocompatible               " Be iMproved
 endif
 
-set runtimepath^=$HOME/.dein/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('$HOME/.dein'))
+" Required:
+set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 
 call dein#add('Shougo/dein.vim')
 "call dein#add(expand('~/.dein/repos/github.com/Shougo/dein.vim'))
@@ -38,12 +39,52 @@ call dein#add('rust-lang/rust.vim')
 call dein#add('tomasr/molokai')
 call dein#add('pboettch/vim-cmake-syntax')
 call dein#add('lighttiger2505/gtags.vim')
+" Required:
+if dein#load_state('$HOME/.cache/dein')
+  call dein#begin('$HOME/.cache/dein')
 
-call dein#end()
-filetype plugin indent on
-if dein#check_install()
-	call dein#install()
+  " Let dein manage dein
+  " Required:
+  call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here like this:
+  "call dein#add('Shougo/neosnippet.vim')
+  "call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/dein.vim')
+  "call dein#add(expand('~/.dein/repos/github.com/Shougo/dein.vim'))
+  call dein#add('Shougo/neocomplcache')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/vinarise')
+  call dein#add('Shougo/vimfiler')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('fatih/vim-go', {'autoload' : {'filetypes' : 'go'}, 'lasy': 1})
+  call dein#add('lyuts/vim-rtags')
+  call dein#add('moro/vim-review')
+  call dein#add('itchyny/lightline.vim')
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('msanders/cocoa.vim')
+  call dein#add('andymass/vim-matchup')
+  "call dein#add('mattn/vim-trex')
+  call dein#add('stephpy/vim-yaml')
+  call dein#add('keith/swift.vim')
+  call dein#add('elixir-lang/vim-elixir')
+  call dein#add('CoatiSoftware/vim-sourcetrail')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
 endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"End dein Scripts-------------------------"
 
 ""--------------------------------
 "" Neobundle 
