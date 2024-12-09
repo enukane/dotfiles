@@ -276,6 +276,9 @@ function echod() {
 # reload zshrc
 function reload() {
         source $HOME/.zshrc
+	if [ -d venv ]; then
+		source venv/bin/activate
+	fi
 }
 
 function cd2macinclude() {
